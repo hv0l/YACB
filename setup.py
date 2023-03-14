@@ -1,4 +1,5 @@
 import configparser
+import os
 
 config = configparser.ConfigParser()
 config.read('config.ini')
@@ -24,3 +25,8 @@ while True:
     except Exception as e:
         print(f"API error: {e}")
         print("API key is invalid, please try again")
+
+# Copy chat.py to /usr/local/bin and make it executable
+os.system("sudo cp yacb.py /usr/local/bin/yacb")
+os.system("sudo chmod +x /usr/local/bin/yacb")
+print("chatbot installed in /usr/local/bin")
