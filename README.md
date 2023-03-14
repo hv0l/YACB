@@ -1,5 +1,5 @@
 # YACB
-Yet Another Chat GPT Bot
+Yet Another ChatGPT Bot
 
 ```git clone https://github.com/hv0l/YACB```
 
