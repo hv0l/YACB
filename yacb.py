@@ -4,7 +4,8 @@ import configparser
 import openai
 import pickle
 import sys
-from termcolor import colored
+from tkinter import *
+from tkinter.scrolledtext import ScrolledText
 
 
 def load_configuration():
@@ -53,21 +54,45 @@ def get_response(message, models, memory, conversation_history):
     return response
 
 
-def main():
-    models = load_configuration()
-    memory = load_memory()
-    conversation_history = []
+def send_message():
+    message = input_field.get()
+    if not message:
+        return
 
-    while True:
-        message = input("You: ")
-        if message.lower() == "exit":
-            break
+    input_field.delete(0, END)
+    chat_log.config(state=NORMAL)
+    chat_log.insert(END, f"You: {message}\n")
+    chat_log.config(state=DISABLED)
 
-        response = get_response(message, models, memory, conversation_history)
-        print(colored("GPT: ", "green") + response)
+    response = get_response(message, models, memory, conversation_history)
+    chat_log.config(state=NORMAL)
+    chat_log.insert(END, f"GPT: {response}\n", "gpt")
+    chat_log.config(state=DISABLED)
 
-        save_memory(memory)
+    save_memory(memory)
 
 
-if __name__ == '__main__':
-    main()
+models = load_configuration()
+memory = load_memory()
+conversation_history = []
+
+root = Tk()
+root.title("Chatbot")
+
+frame = Frame(root)
+scrollbar = Scrollbar(frame)
+chat_log = ScrolledText(frame, wrap=WORD, state=DISABLED, yscrollcommand=scrollbar.set)
+scrollbar.pack(side=RIGHT, fill=Y)
+chat_log.pack(side=LEFT, fill=BOTH, expand=True)
+frame.pack(fill=BOTH, expand=True)
+
+chat_log.tag_configure("gpt", foreground="green")
+
+input_field = Entry(root)
+input_field.pack(fill=X, padx=5, pady=5)
+input_field.bind('<Return>', lambda event: send_message())
+
+send_button = Button(root, text="Send", command=send_message)
+send_button.pack(side=RIGHT, padx=5, pady=5)
+
+root.mainloop()
