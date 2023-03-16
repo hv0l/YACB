@@ -72,4 +72,5 @@ If you encounter any issues while running the chatbot, please check the followin
 1. Make sure your OpenAI API key is valid and correctly set in the `config.ini` file.
 2. Ensure you have installed all the required Python libraries.
 
+![Schermata del 2023-03-16 17-33-34](https://user-images.githubusercontent.com/61795418/225689113-3c86352d-96c3-4afd-b15d-58aeb8bdcd2c.png)
 
